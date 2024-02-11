@@ -132,6 +132,7 @@ if __name__ == '__main__':
 ### 4. GSM Module with Arduino UNO
 
 ```cpp
+// send_sms
 #include <SoftwareSerial.h>
 
 SoftwareSerial gsm(8, 9); // RX, TX pins for software serial communication
@@ -176,6 +177,47 @@ void UpdateSerial() {
     gsm.write(Serial.read());
   }
   // Relay any incoming data from the GSM module to the serial monitor
+  while (gsm.available()) {
+    Serial.write(gsm.read());
+  }
+}
+```
+
+```cpp
+// receive_sms
+#include <SoftwareSerial.h>
+
+SoftwareSerial gsm(8, 9); 
+
+void setup() {
+  Serial.begin(9600);
+  gsm.begin(9600);
+  Serial.println("Initializing...");
+  delay(3000);
+
+  // Send AT commands and check responses using waitForResponse function
+  if (!waitForResponse("AT", "OK")) return;
+  if (!waitForResponse("AT+CMGF=1", "OK")) return;
+  if (!waitForResponse("AT+CNMI=1,2,0,0,0", "OK")) return;
+
+  Serial.println("GSM module configured for SMS reception.");
+}
+
+void loop() {
+  UpdateSerial(); // Continuously monitor serial communication
+}
+
+bool waitForResponse(String command, const char* expected) {
+  gsm.println(command);
+  UpdateSerial(); 
+  return waitForResponse(1000, expected); // Use existing waitForResponse function
+}
+
+void UpdateSerial() {
+  delay(500);
+  while (Serial.available()) {
+    gsm.write(Serial.read());
+  }
   while (gsm.available()) {
     Serial.write(gsm.read());
   }
