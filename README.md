@@ -242,13 +242,16 @@ void UpdateSerial() {
 
 ### 5. Communication between Arduino and Raspberry Pi using Serial Cable
 
-```cpp
-// Paste your Serial Communication code here
-void setup() {
-  // Your setup code
-}
+- [Arduino Code](#1-ldr-sensor-with-arduino-uno)
 
-void loop() {
-  // Your loop code
-}
+```python
+import serial
+
+# Replace '/dev/ttyUSB0' with the actual serial port your Arduino is connected to
+ser = serial.Serial('/dev/ttyUSB0', 9600)
+
+while True:
+    if ser.in_waiting > 0:
+        data = ser.readline().decode('utf-8').rstrip()
+        print(f"Received from Arduino: {data}")
 ```
