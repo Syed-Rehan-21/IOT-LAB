@@ -245,6 +245,7 @@ void UpdateSerial() {
 - [Arduino Code](#1-ldr-sensor-with-arduino-uno)
 
 ```python
+# Raspberry Pi Code (Python)
 import serial
 
 # Replace '/dev/ttyUSB0' with the actual serial port your Arduino is connected to
