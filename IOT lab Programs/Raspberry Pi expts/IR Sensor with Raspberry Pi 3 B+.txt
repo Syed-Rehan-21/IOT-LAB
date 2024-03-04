@@ -1,0 +1,22 @@
+// IR Sensor with Raspberry Pi 3 B+:
+
+import RPi.GPIO as GPIO
+import time
+
+GPIO.setmode(GPIO.BCM)
+
+ir_sensor_pin = 18
+
+GPIO.setup(ir_sensor_pin, GPIO.IN)
+
+try:
+    while True:
+        ir_sensor_state = GPIO.input(ir_sensor_pin)
+
+        if ir_sensor_state == GPIO.HIGH:
+            print("Object detected!")
+        else:
+            print("Object not detected!")
+
+except KeyboardInterrupt:
+    GPIO.cleanup()

@@ -1,0 +1,28 @@
+// LCD 16x2 and LDR Sensor with Arduino UNO:
+
+#include <Wire.h>
+#include <LiquidCrystal_I2C.h>
+
+LiquidCrystal_I2C lcd(0x27, 16, 2);
+const int ldrPin = A0;
+
+void setup() {
+  lcd.init();
+  lcd.backlight();
+  lcd.setCursor(0, 0);
+  lcd.print("LDR and LCD Demo");
+  Serial.begin(9600);
+}
+
+void loop() {
+  int ldrValue = analogRead(ldrPin);
+
+  lcd.setCursor(0, 1);
+  lcd.print("LDR Value: ");
+  lcd.print(ldrValue);
+
+  Serial.print("LDR Value: ");
+  Serial.println(ldrValue);
+
+  delay(1000);
+}

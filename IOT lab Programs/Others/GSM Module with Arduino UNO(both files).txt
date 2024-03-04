@@ -1,0 +1,77 @@
+// GSM Module with Arduino UNO:
+
+// Receive SMS - different file
+
+#include <SoftwareSerial.h>
+
+SoftwareSerial gsmSerial(8, 9);
+
+void setup() {
+  Serial.begin(9600);
+  gsmSerial.begin(9600);
+
+  Serial.println("Initializing...");
+  delay(1000);
+
+  gsmSerial.println("AT");
+  updateSerial();
+
+  gsmSerial.println("AT+CMGF=1");
+  updateSerial();
+
+  gsmSerial.println("AT+CNMI=1,2,0,0,0");
+  updateSerial();
+}
+
+void loop() {
+  updateSerial();
+}
+
+void updateSerial() {
+  delay(500);
+  while (Serial.available()) {
+    gsmSerial.write(Serial.read());
+  }
+  while (gsmSerial.available()) {
+    Serial.write(gsmSerial.read());
+  }
+}
+
+// Send SMS - different file
+
+#include <SoftwareSerial.h>
+
+SoftwareSerial gsmSerial(8, 9);
+
+void setup() {
+  Serial.begin(9600);
+  gsmSerial.begin(9600);
+
+  Serial.println("Initializing...");
+  delay(1000);
+
+  gsmSerial.println("AT");
+  updateSerial();
+
+  gsmSerial.println("AT+CMGF=1");
+  updateSerial();
+
+  gsmSerial.println("AT+CMGS=\"+ZZxxxxxxxxxx\"");
+  updateSerial();
+  gsmSerial.print("Happy SMS");
+  updateSerial();
+  gsmSerial.write(26);
+}
+
+void loop() {
+}
+
+void updateSerial() {
+  delay(500);
+  while (Serial.available()) {
+    gsmSerial.write(Serial.read());
+  }
+  while (gsmSerial.available()) {
+    Serial.write(gsmSerial.read());
+  }
+}

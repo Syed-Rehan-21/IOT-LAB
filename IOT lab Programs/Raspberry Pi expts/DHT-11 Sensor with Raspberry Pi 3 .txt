@@ -1,0 +1,21 @@
+// DHT-11 Sensor with Raspberry Pi 3 B+:
+
+import RPi.GPIO as GPIO
+import time
+import Adafruit_DHT
+
+sensor = Adafruit_DHT.DHT11
+pin = 17
+
+GPIO.setmode(GPIO.BOARD)
+GPIO.setup(sensor, GPIO.IN)
+
+print("DHT sensor read....")
+print(" ")
+
+while True:
+    humidity, temperature = Adafruit_DHT.read_retry(sensor, pin)
+    if humidity is not None and temperature is not None:
+        print('Temp={0:0.1f}*C Humidity={1:0.1f}%'.format(temperature, humidity))
+    else:
+        print('failed To read')

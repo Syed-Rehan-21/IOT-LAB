@@ -1,0 +1,33 @@
+// LCD 16x2 and IR Sensor with Arduino UNO:
+
+#include <Wire.h>
+#include <LiquidCrystal_I2C.h>
+
+LiquidCrystal_I2C lcd(0x27, 16, 2);
+int IRSensor = 2;
+
+void setup() {
+  Serial.begin(9600);
+  lcd.init();
+  lcd.backlight();
+  lcd.clear();
+  pinMode(IRSensor, INPUT);
+}
+
+void loop() {
+  int sensorStatus = digitalRead(IRSensor);
+
+  if (sensorStatus == 1) {
+    lcd.setCursor(0, 0);
+    lcd.print("Object not detected");
+    Serial.println("Object not Detected!");
+  } else {
+    lcd.clear();
+    delay(1000);
+    lcd.setCursor(0, 0);
+    lcd.print("Object detected");
+    Serial.println("Object Detected!");
+  }
+
+  delay(1000);
+}

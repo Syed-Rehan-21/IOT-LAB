@@ -1,0 +1,31 @@
+// Communication Between Arduino and Raspberry Pi 3 B+ using Serial Cable:
+
+// Arduino Code
+void setup() {
+  Serial.begin(9600);
+}
+
+void loop() {
+  Serial.println("Hello from Arduino!");
+  delay(1000);
+}
+
+
+
+// Raspberry Pi Code (Python)
+import serial
+import time
+
+ser = serial.Serial('/dev/ttyS0', 9600, timeout=1)
+
+try:
+    while True:
+        data = ser.readline().decode('utf-8').rstrip()
+
+        if data:
+            print("Received from Arduino:", data)
+
+        time.sleep(1)
+except KeyboardInterrupt:
+    ser.close()
+    print("Serial communication closed.")

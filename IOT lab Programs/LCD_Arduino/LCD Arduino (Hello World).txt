@@ -1,0 +1,35 @@
+// LCD 16x2 with Arduino UNO (Hello World):
+
+#include <Wire.h>
+#include <LiquidCrystal_I2C.h>
+
+LiquidCrystal_I2C lcd(0x27, 16, 2);
+
+void setup() {
+  lcd.init();
+  lcd.backlight();
+  lcd.setCursor(0, 0);
+  lcd.clear();
+}
+
+void loop() {
+  lcd.print("Hello, world!");
+  delay(1000);
+  lcd.clear();
+
+  for (int positionCounter = 0; positionCounter < 13; positionCounter++) {
+    lcd.scrollDisplayLeft();
+    delay(1000);
+  }
+
+  lcd.clear();
+  delay(1000);
+
+  for (int positionCounter = 0; positionCounter < 13; positionCounter++) {
+    lcd.scrollDisplayRight();
+    delay(1000);
+  }
+
+  lcd.clear();
+  delay(1000);
+}

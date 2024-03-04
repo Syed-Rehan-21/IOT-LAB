@@ -1,0 +1,30 @@
+// Bluetooth Module with Arduino UNO:
+
+#include <SoftwareSerial.h>
+
+#define ledPin 13
+SoftwareSerial EEBlue(10, 11);
+
+int state = 0;
+
+void setup() {
+  Serial.begin(9600);
+  EEBlue.begin(9600);
+  Serial.println("The blueTooth is ready.\n Connect To HC-05 from any other blueTooth device with 1234 as pairing key!.");
+  pinMode(ledPin, OUTPUT);
+  digitalWrite(ledPin, LOW);
+}
+
+void loop() {
+  if (EEBlue.available() > 0) {
+    char input = EEBlue.read();
+
+    if (input == '0') {
+      digitalWrite(ledPin, LOW);
+      Serial.println("LED: OFF");
+    } else if (input == '1') {
+      digitalWrite(ledPin, HIGH);
+      Serial.println("LED: ON");
+    }
+  }
+}

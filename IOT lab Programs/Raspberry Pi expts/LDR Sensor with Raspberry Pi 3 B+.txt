@@ -1,0 +1,22 @@
+// LDR Sensor with Raspberry Pi 3 B+:
+
+import RPi.GPIO as GPIO
+import time
+
+sensor = 16
+
+GPIO.setmode(GPIO.BOARD)
+GPIO.setup(sensor, GPIO.IN)
+
+print("LDR sensor read....")
+print(" ")
+
+try:
+    while True:
+        if GPIO.input(sensor) == 1:
+            print("Light Not Detected")
+        elif GPIO.input(sensor) == 0:
+            print("Light Detected")
+
+except KeyboardInterrupt:
+    GPIO.cleanup()
